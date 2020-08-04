@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="pin-generate" class="form-control" type="text">
+                    <button id="generate-btn" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div name="calculator" class="input-section half-width">
+                    <input name="screen" id="digit-view" class="form-control" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div  class="button" onclick="digitInsert(7)">7</div>
+                              <div  class="button" onclick="digitInsert(8)">8</div>
+                              <div  class="button" onclick="digitInsert(9)">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="digitInsert(4)">4</div>
+                              <div class="button" onclick="digitInsert(5)">5</div>
+                              <div class="button" onclick="digitInsert(6)">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" onclick="digitInsert(1)">1</div>
+                              <div class="button" onclick="digitInsert(2)">2</div>
+                              <div class="button" onclick="digitInsert(3)">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="backspace()"><</div>
+                                <div class="button" onclick="digitInsert(0)" >0</div>
+                                <div class="button" onclick="removeAll()" >C</div>
+                            </div>
+                            <div>
+                                <button id="submit-btn" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p id="mismatch-notify" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="match-notify"class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+	
+	<script>
+		// generate random number
+		document.getElementById('generate-btn').addEventListener('click', function(){
+		let randomNo = Math.floor(Math.random()*(9999-1000+1)+1000);		
+		document.getElementById('pin-generate').value = randomNo;		 			
+		});
+		
+		// pin match notification
+		document.getElementById('submit-btn').addEventListener('click', function(){
+			const pinInput = document.getElementById('digit-view').value;
+			const pinGenerate = document.getElementById('pin-generate').value;
+			if(pinInput == pinGenerate){				 
+				 document.getElementById('match-notify').style.display = "block";					 
+			     document.getElementById('mismatch-notify').style.display = "none";					 
+			}
+			else {
+				 document.getElementById('mismatch-notify').style.display = "block";					
+				document.getElementById('match-notify').style.display = "none"; 
+			}
+		});
+		
+				
+		// input Number
+		function digitInsert(number) {
+			const digitView = document.getElementById("digit-view").value;
+			document.getElementById("digit-view").value = digitView + number;
+		}
+		
+		// remove all digit 
+		function removeAll() {
+			document.getElementById("digit-view").value = "";
+		}
+		
+		// backspace
+		function backspace() {
+			const digitView = document.getElementById("digit-view").value;
+			if (digitView != "") {
+				document.getElementById("digit-view").value = digitView.slice(0, -1);
+			}
+		}
+				
+        
+	</script>
+</body>
+</html>
